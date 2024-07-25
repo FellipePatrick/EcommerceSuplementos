@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+        <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+            <head th:replace="./fragments/commons :: head">
+    
+            </head>
+            <body>
+            <header th:replace="./fragments/commons :: headerLog"></header>
+
+             <!-- Navbar-->
+            <nav id="navigation">
+                <!-- container -->
+                <div class="container">
+                    <!-- responsive-nav -->
+                    <div id="responsive-nav">
+                        <!-- NAV -->
+                        <ul class="main-nav nav navbar-nav">
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#" class="active">Carrinho</a></li>
+                            <li><a href="#">Sair</a></li>
+                        </ul>
+                        <!-- /NAV -->
+                    </div>
+                    <!-- /responsive-nav -->
+                </div>
+                <!-- /container -->
+            </nav>
+
+            <!-- MY LITTLE CAR -->
+            <div class="section">
+                <!-- container -->
+                <div class="container">
+                    <!-- row -->
+                    <div class="row">
+    
+                        <!-- section title -->
+                        <div class="col-md-12">
+                            <div class="section-title">
+                                <h3 class="title">Meu Carrinho</h3>
+                                <div class="section-nav">
+                                    <ul class="section-tab-nav tab-nav">
+                                        <li class="active"><a data-toggle="tab" href="#tab1">Laptops</a></li>
+                                        <li><a data-toggle="tab" href="#tab1">Smartphones</a></li>
+                                        <li><a data-toggle="tab" href="#tab1">Cameras</a></li>
+                                        <li><a data-toggle="tab" href="#tab1">Accessories</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /section title -->
+    
+                        <!-- Products tab & slick -->
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="products-tabs">
+                                    <!-- tab -->
+                                    <div id="tab1" class="tab-pane active">
+                                        <div class="products-slick slick-initialized slick-slider" data-nav="#slick-nav-1">
+                                            <!-- product -->
+                                            <div class="product slick-slide slick-active" data-slick-index="3" aria-hidden="false" tabindex="0" style="width: 213px;">
+                                                <div class="product-img">
+                                                    <img src="./img/product04.png" alt="">
+                                                </div>
+                                                <div class="product-body">
+                                                    <p class="product-category">Category</p>
+                                                    <h3 class="product-name"><a href="#" tabindex="0">product name goes here</a></h3>
+                                                    <h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
+                                                    <div class="product-rating">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div>
+                                                    <div class="product-btns">
+                                                        <button class="add-to-wishlist" tabindex="0"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                                        <button class="add-to-compare" tabindex="0"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
+                                                        <button class="quick-view" tabindex="0"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                                                    </div>
+                                                </div>
+                                                <div class="add-to-cart">
+                                                    <button class="add-to-cart-btn" tabindex="0"><i class="fa fa-shopping-cart"></i> remover</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="slick-nav-1" class="products-slick-nav"><button class="slick-prev slick-arrow" aria-label="Previous" type="button" style="display: inline-block;">Previous</button><button class="slick-next slick-arrow" aria-label="Next" type="button" style="display: inline-block;">Next</button></div>
+                                    </div>
+                                    <!-- /tab -->
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Products tab & slick -->
+                    </div>
+                    <!-- /row -->
+                </div>
+                <!-- /container -->
+            </div>
+            
+   
+            <footer th:replace="./fragments/commons :: footer"></footer>  
+        </body>
+    </html>

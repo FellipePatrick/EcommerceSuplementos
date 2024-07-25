@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+        <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+            <head th:replace="./fragments/commons :: head">
+               
+            </head>
+            <body>
+            <header th:replace="./fragments/commons :: header"></header>
+
+            <div class="form-container">
+                <h1>Editar <br> Suplementos</h1>
+                <form th:object="${Suplmento}" method="post">
+                    <input type="hidden"/>
+                    <label for="Nome">Título</label>
+                    <input type="text"  id="Nome" placeholder="Digite o título do suplemento" />
+                    
+                    <label for="preco">Preço</label>
+                    <input type="number"  id="preco" placeholder="Digite o preço" />
+                    
+                    <label for="descricao">Descrição</label>
+                    <input type="text"id="descricao" placeholder="Digite a descrição" />
+                    
+                    <label for="categoria">Categoria</label>
+                    <select id="categoria">
+                        <option value="">Selecione uma categoria</option>
+                        <option value="Proteínas">Proteínas</option>
+                        <option value="Vitaminas">Vitaminas</option>
+                        <option value="Minerais">Minerais</option>
+                    </select>
+                    <br>
+                    <button type="submit">Cadastrar</button>
+                </form>
+            </div>
+
+                <footer th:replace="./fragments/commons :: footer"></footer>  
+        </body>
+    </html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="./fragments/commons :: head">
+        <!-- Meta tags, CSS, etc. -->
+    </head>
+    <body>
+        <header th:replace="./fragments/commons :: header"></header>
+
+        <div class="form-container" style="height: 400px;">
+            <h1>Login</h1>
+            <form  method="post">           
+                <label for="email">E-mail</label>
+                <input type="email"  id="email" placeholder="Digite o e-mail" />
+                
+                <label for="password">Senha</label>
+                <input type="password" id="password" placeholder="Digite a senha" />
+                <br>
+                <div style="display: flex; justify-content: center;">
+                    <button type="submit" style="width: 50%; margin-top: 50px;">Enviar</button>
+                </div>
+                
+            </form>
+        </div>
+
+        <footer th:replace="./fragments/commons :: footer"></footer>  
+    </body>
+</html>

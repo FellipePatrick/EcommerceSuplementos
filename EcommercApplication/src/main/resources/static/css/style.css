@@ -413,6 +413,7 @@ textarea.input {
 #top-header {
   padding-top: 10px;
   padding-bottom: 10px;
+
   background-color: #1E1F29;
 }
 
@@ -446,6 +447,7 @@ textarea.input {
 #header {
   padding-top: 15px;
   padding-bottom: 15px;
+  margin-bottom: 100px;
   background-color: #15161D;
 }
 
@@ -2002,6 +2004,7 @@ textarea.input {
 ===========================================================*/
 
 #footer {
+  margin-top: 50px;
   background: #15161D;
   color: #B9BABC;
 }
@@ -2011,6 +2014,7 @@ textarea.input {
 }
 
 .footer {
+
   margin: 30px 0px;
 }
 

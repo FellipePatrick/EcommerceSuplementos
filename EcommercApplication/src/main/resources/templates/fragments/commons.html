@@ -137,7 +137,56 @@
                 </div>
                 <!-- /MAIN HEADER -->
             </header>
-
+            <nav id="navigation" th:fragment="nav">
+                <!-- container -->
+                <div class="container">
+                    <!-- responsive-nav -->
+                    <div id="responsive-nav">
+                        <!-- NAV -->
+                        <ul class="main-nav nav navbar-nav">
+                            <li><a th:href="@{/}">Home</a></li>
+                            <li><a th:href="@{/carrinho}">Carrinho</a></li>
+                            <li><a th:href="@{/cadastroSuplementos}">Adicionar Produto</a></li>
+                            <li><a th:href="@{/}">Sair</a></li>
+                        </ul>
+                        <!-- /NAV -->
+                    </div>
+                    <!-- /responsive-nav -->
+                </div>
+                <!-- /container -->
+            </nav>
+            <div class="section" th:fragment="pint">
+                <!-- container -->
+                <div class="container">
+                    <!-- row -->
+                    <div class="row">
+                        <!-- shop -->
+                        <div class="col-md-4 col-xs-6">
+                            <div class="shop">
+                                <div class="shop-img">
+                                    <img src="" alt="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-xs-6">
+                            <div class="shop">
+                                <div class="shop-img">
+                                    <img src="" alt="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-xs-6">
+                            <div class="shop">
+                                <div class="shop-img">
+                                    <img src="" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /row -->
+                </div>
+                <!-- /container -->
+            </div>
 
 
             <footer id="footer" th:fragment="footer">

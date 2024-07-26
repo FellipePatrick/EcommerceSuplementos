@@ -1,5 +1,7 @@
 package cog.com.EcommercApplication.domain;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,14 +20,14 @@ public class Suplementos{
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    String id;
+    private String id;
 
-    String nome;
-    String imageUri;
-    float preco;
-    String descricao;
-    String categoria;
-    //Data dataCadastro;
+    private String nome;
+    private String imageUri;
+    private float preco;
+    private String descricao;
+    private String categoria;
+    private LocalDate  isDeleted;
     
     
 }

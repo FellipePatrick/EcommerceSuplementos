@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import cog.com.EcommercApplication.domain.Suplementos;
 import cog.com.EcommercApplication.service.SuplementosService;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @Controller
@@ -58,6 +60,12 @@ public class EcommerceController {
     public String doCarrinho(){
         return "carrinho";
     }
+
+    @GetMapping("/produto")
+    public String doProduto() {
+        return "produto";
+    }
+    
     
     
 }

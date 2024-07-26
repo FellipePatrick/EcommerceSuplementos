@@ -6,24 +6,9 @@
             <body>
             <header th:replace="./fragments/commons :: headerLog"></header>
 
-             <!-- Navbar-->
-            <nav id="navigation">
-                <!-- container -->
-                <div class="container">
-                    <!-- responsive-nav -->
-                    <div id="responsive-nav">
-                        <!-- NAV -->
-                        <ul class="main-nav nav navbar-nav">
-                            <li><a href="#">Home</a></li>
-                            <li><a href="#" class="active">Carrinho</a></li>
-                            <li><a href="#">Sair</a></li>
-                        </ul>
-                        <!-- /NAV -->
-                    </div>
-                    <!-- /responsive-nav -->
-                </div>
-                <!-- /container -->
-            </nav>
+            <nav th:replace="./fragments/commons :: nav"/>
+
+            <div th:replace="./fragments/commons :: pint"/>
 
             <!-- MY LITTLE CAR -->
             <div class="section">

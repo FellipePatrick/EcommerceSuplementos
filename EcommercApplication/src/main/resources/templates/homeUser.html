@@ -1,0 +1,30 @@
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="~{fragments/commons :: head}"></head>
+    <body>
+        <header th:replace="~{fragments/commons :: headerLog}"></header>
+
+        
+            <!-- Navbar-->
+            <nav th:replace="~{fragments/commons :: nav}"/>
+            
+            <table style="border: 2px solid black;">
+                <tr>
+                    <!--    <th>id</th>-->
+                    <th>Nome</th>
+                    <th>Preco</th>
+                    <th>Editar</th>
+                    <th>Deletar</th>
+                </tr>
+                <tr th:each="suplemento : ${suplementos}">
+                    <!--        <td th:text="${suplemento.id}"></td>-->
+                    <td th:text="${suplemento.nome}"></td>
+                    <td th:text="${suplemento.preco}"></td>
+                    
+                    <!--<td><img width="100px" th:src="@{'/images/' + ${suplemento.imageUrl}}" alt="imagem"/></td>-->
+                    <td><a th:href="@{'/deletar/'+${suplemento.id}}">Editar</a></td>
+                    <td><a th:href="@{'/deletar/'+${suplemento.id}}">Deletar</a></td>
+                </tr>
+            </table>
+        <footer th:replace="~{/fragments/commons :: footer}"></footer>  
+    </body>
+</html>

@@ -1,5 +1,5 @@
 package cog.com.EcommercApplication.domain;
-import java.time.LocalDate;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -8,19 +8,18 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 @Entity
+@Table(name = "usuario")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "suplementos")
-public class Suplementos{
+public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String nome;
-    private String imageUri;
-    private float preco;
-    private String descricao;
-    private String categoria;
-    private LocalDate  isDeleted;
+    private String email;
+    private String senha;
+    private String isAdmin;
 }

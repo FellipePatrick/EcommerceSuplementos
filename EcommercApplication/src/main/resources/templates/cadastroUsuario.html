@@ -8,18 +8,19 @@
 
         <div class="form-container">
             <h1>Cadastro</h1>
-            <form  method="post">            
+            <form th:object="${usuario}" method="post" th:action="@{/docadastro}">
+                <input type="hidden" th:field="*{id}" />            
                 <label for="nome">Nome</label>
-                <input type="text"  id="nome" placeholder="Digite o nome" />
+                <input type="text"  id="nome" placeholder="Digite o nome" th:field="*{nome}"/>
                 
                 <label for="email">E-mail</label>
-                <input type="email"  id="email" placeholder="Digite o e-mail" />
+                <input type="email"  id="email" placeholder="Digite o e-mail" th:field="*{email}"/>
                 
                 <label for="password">Senha</label>
-                <input type="password" id="password" placeholder="Digite a senha" />
+                <input type="password" id="password" placeholder="Digite a senha" th:field="*{senha}" />
                 
                 <label for="role">Função</label>
-                <select id="role" >
+                <select id="role" th:field="*{isAdmin}" >
                     <option value="">Selecione uma função</option>
                     <option value="USER">Usuário</option>
                     <option value="ADMIN">Administrador</option>    

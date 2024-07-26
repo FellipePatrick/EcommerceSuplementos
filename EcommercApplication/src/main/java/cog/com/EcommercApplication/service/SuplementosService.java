@@ -1,7 +1,9 @@
 package cog.com.EcommercApplication.service;
 
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -20,16 +22,17 @@ public class SuplementosService {
         suplementosRepository.save(suplemento);
     }
 
-    public Suplementos buscarSuplemento(String id){
-        return suplementosRepository.findById(id).get();
+    public Optional<Suplementos>  buscarSuplemento(Long id){
+        return suplementosRepository.findById(id);
     }
 
-    public void softDelete(String id){
-        Suplementos suplementos = buscarSuplemento(id);
-        //suplementos.se
+    public void softDelete(Long id){
+        Suplementos suplementos = suplementosRepository.findById(id).get();
+        suplementos.setIsDeleted(LocalDate.now());
+        suplementosRepository.save(suplementos);
     }
 
     public List<Suplementos> listarSuplementos(){
-       return suplementosRepository.findAll();
+       return suplementosRepository.findAllWhereIsDeletedIsNotNull();
      }
 }

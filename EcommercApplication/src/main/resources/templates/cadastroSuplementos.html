@@ -8,11 +8,14 @@
 
         <div class="form-container">
             <h1>Cadastrar <br> Suplementos</h1>
-            <form th:object="${suplemento}" method="post" th:action="@{/docadastrarSuplemento}">
+            <form th:object="${suplemento}" method="post" th:action="@{/docadastrarSuplemento}" enctype="multipart/form-data">
                 <input type="hidden" th:field="*{id}" />
                 
                 <label for="Nome">Nome</label>
                 <input type="text" th:field="*{nome}" id="Nome" placeholder="Digite o nome do suplemento" />
+
+                <label for="Imagem">Imagem</label>
+                <input type="file" name="file" id="Image" placeholder="Escolha uma imagem" />
                 
                 <label for="preco">Preço</label>
                 <input type="number" th:field="*{preco}" id="preco" placeholder="Digite o preço" />

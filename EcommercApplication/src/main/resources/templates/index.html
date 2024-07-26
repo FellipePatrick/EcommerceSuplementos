@@ -1,16 +1,15 @@
 <!DOCTYPE html>
-        <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
-            <head th:replace="./fragments/commons :: head">
-    
-            </head>
-            <body>
-            <header th:replace="./fragments/commons :: headerLog"></header>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="~{fragments/commons :: head}"></head>
+    <body>
+        <header th:replace="~{fragments/commons :: headerLog}"></header>
 
-          
-             <!-- Navbar-->
-             <nav th:replace="./fragments/commons :: nav"/>
-            
-            <div th:replace="./fragments/commons :: pint"/>
+        
+            <!-- Navbar-->
+            <nav th:replace="~{fragments/commons :: nav}"/>
+        
+        
+            <div th:replace="~{fragments/commons :: pint}"/>
 
             <!-- SUPLEMENTAÇÃO  -->
             <div class="section">
@@ -18,7 +17,7 @@
                 <div class="container">
                     <!-- row -->
                     <div class="row">
-    
+
                         <!-- section title -->
                         <div class="col-md-12">
                             <div class="section-title">
@@ -34,57 +33,17 @@
                             </div>
                         </div>
                         <!-- /section title -->
-    
+
                         <!-- Products tab & slick -->
-                        <div class="col-md-12">
-                            <div class="row">
-                                <div class="products-tabs">
-                                    <!-- tab -->
-                                    <div id="tab1" class="tab-pane active">
-                                        <div class="products-slick slick-initialized slick-slider"  th:each="suplemento : ${suplementos}"  data-nav="#slick-nav-1">
-                                            <!-- product -->
-                                            <div class="product slick-slide slick-active" data-slick-index="3" aria-hidden="false" tabindex="0" style="width: 213px;">
-                                                <div class="product-img">
-                                                    <img src="./img/product04.png" alt="">
-                                                </div>
-                                                <div class="product-body">
-                                                    <p class="product-category" th:text="${suplemento.categoria}"></p>
-                                                    <h3 class="product-name" th:text="${suplemento.nome}"></h3>
-                                                    <h4 class="product-price" th:text="'$' + ${suplemento.preco}"></h4>
-                                                    <div class="product-rating">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                    </div>
-                                                    <div class="product-btns">
-                                                        <button class="add-to-wishlist" tabindex="0"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-                                                        <button class="add-to-compare" tabindex="0"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-                                                        <button class="quick-view" tabindex="0"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                                    </div>
-                                                </div>
-                                                <div class="add-to-cart">
-                                                    <button class="add-to-cart-btn" tabindex="0"><i class="fa fa-shopping-cart"></i> add to cart</button>
-                                                </div>
-                                            </div>
-                                            <div id="slick-nav-1" class="products-slick-nav"><button class="slick-prev slick-arrow" aria-label="Previous" type="button" style="display: inline-block;">Previous</button><button class="slick-next slick-arrow" aria-label="Next" type="button" style="display: inline-block;">Next</button></div>
-                                        </div>
-                                    </div>
-                                    <!-- /tab -->
-                                </div>
-                            </div>
-                        </div>
+                        <div th:replace="~{fragments/commons :: cards}"/>
                         <!-- Products tab & slick -->
                     </div>
                     <!-- /row -->
                 </div>
                 <!-- /container -->
             </div>
-
-            
-            <div th:replace="./fragments/commons :: pint"/>
-            <!-- TOP SUPLEMENTOS -->
+            <div th:replace="~{fragments/commons :: pint}"/>
+                <!-- TOP SUPLEMENTOS -->
             <div class="section">
                 <div class="container">
                     <div class="row">
@@ -100,56 +59,11 @@
                                     </ul>
                                 </div>
                             </div>
-                        </div>
-            
-                        <div class="col-md-12">
-                            <div class="row">
-                                <div class="col-md-3" th:each="suplemento : ${suplementos}">
-                                    <div class="products-tabs">
-                                        <div id="tab2" class="tab-pane fade in active">
-                                            <div class="products-slick"  data-nav="#slick-nav-2">
-                                                <div class="product">
-                                                    <div class="product-img">
-                                                        <img src="./img/product07.png" alt="">
-                                                        <div class="product-label">
-                                                            <span class="new">NEW</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="product-body">
-                                                        <p class="product-category" th:text="${suplemento.categoria}"></p>
-                                                        <h3 class="product-name" th:text="${suplemento.nome}"> </h3>
-                                                        <h4 class="product-price" th:text="${suplemento.preco}"> </h4>
-                                                        <div class="product-rating">
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                        </div>
-                                                        <div class="product-btns">
-                                                            <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-                                                            <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-                                                            <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                                        </div>
-                                                    </div>
-                                                    <div class="add-to-cart">
-                                                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="slick-nav-2" class="products-slick-nav"><button class="slick-prev slick-arrow">Previous</button><button class="slick-next slick-arrow">Next</button></div>
-                            </div>
-                        </div>
+                        </div>  
+                        <div th:replace="~{fragments/commons :: cards}"/>
                     </div>
                 </div>
-            </div>
-            
-             
-            <footer th:replace="./fragments/commons :: footer"></footer>  
-
-            
+            </div>  
+                <footer th:replace="~{/fragments/commons :: footer}"></footer>  
         </body>
     </html>

@@ -248,12 +248,12 @@
             <div class="div" th:fragment="cards">
                 <div class="col-md-12">
                     <div class="row">
-                        <div class="products-tabs">
+                        <div class="products-tabs" >
                             <!-- tab -->
-                            <div id="tab1" class="tab-pane active">
-                                <div class="products-slick slick-initialized slick-slider" data-nav="#slick-nav-1">
+                            <div id="tab1" class="tab-pane active" >
+                                <div class="products-slick slick-initialized slick-slider" data-nav="#slick-nav-1" >
                                     <!-- product -->
-                                    <div  th:each="suplemento : ${suplementos}"  class="product slick-slide slick-active" data-slick-index="3" aria-hidden="false" tabindex="0" style="width: 213px;">
+                                    <div   class="product slick-slide slick-active" data-slick-index="3" aria-hidden="false" tabindex="0" style="width: 213px;" th:each="suplemento : ${suplementos}">
                                         <div class="product-img">
                                             <img th:src="@{'/images/' + ${suplemento.imageUri}}" alt="">
                                         </div>

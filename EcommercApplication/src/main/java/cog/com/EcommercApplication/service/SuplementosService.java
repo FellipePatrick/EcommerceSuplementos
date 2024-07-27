@@ -18,6 +18,11 @@ public class SuplementosService {
         this.suplementosRepository = suplementosRepository;
     }
 
+    public void update(Suplementos suplemento){
+        suplementosRepository.save(suplemento);
+    }
+
+
     public void cadastrarSuplemento(Suplementos suplemento){
         suplementosRepository.save(suplemento);
     }

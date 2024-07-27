@@ -5,26 +5,37 @@
             </head>
             <body>
             <header th:replace="./fragments/commons :: headerLog"></header>
-
+            
             <div class="form-container">
                 <h1>Editar <br> Suplementos</h1>
-                <form th:object="${Suplmento}" method="post">
-                    <input type="hidden"/>
-                    <label for="Nome">Título</label>
-                    <input type="text"  id="Nome" placeholder="Digite o título do suplemento" />
-                    
+                <form th:object="${suplemento}" method="post" th:action="@{/salvar}" enctype="multipart/form-data">
+                
+                    <input type="hidden" th:field="*{id}" />
+                
+                    <label for="Nome">Nome</label>
+                    <input type="text" th:field="*{nome}" id="nome" placeholder="Digite o nome do suplemento" />
+                    <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}" style="color: red"> </span> <br />
+
+                    <label for="Imagem">Imagem</label>
+                    <input type="file" name="file" id="image" placeholder="Escolha uma imagem" />
+                
+
                     <label for="preco">Preço</label>
-                    <input type="number"  id="preco" placeholder="Digite o preço" />
+                    <input type="number" th:field="*{preco}" id="preco" placeholder="Digite o preço" />
+                    <span th:if="${#fields.hasErrors('preco')}" th:errors="*{preco}" style="color: red">oii </span> <br />
                     
                     <label for="descricao">Descrição</label>
-                    <input type="text"id="descricao" placeholder="Digite a descrição" />
-                    
+                    <input type="text" id="descricao" th:field="*{descricao}" placeholder="Digite a descrição" />
+                    <span th:if="${#fields.hasErrors('descricao')}" th:errors="*{descricao}" 
+                    style="color: red"> oi</span> <br />
+
                     <label for="categoria">Categoria</label>
-                    <select id="categoria">
+                    <select id="categoria" th:field="*{categoria}">
                         <option value="">Selecione uma categoria</option>
-                        <option value="Proteínas">Proteínas</option>
-                        <option value="Vitaminas">Vitaminas</option>
-                        <option value="Minerais">Minerais</option>
+                        <option value="Proteínas">Proteina</option>
+                        <option value="Vitaminas">Vitamina</option>
+                        <option value="Minerais">Mineral</option>
+                        <option value="Pré-Treinos">Pre-Treino</option>
                     </select>
                     <br>
                     <button type="submit">Cadastrar</button>

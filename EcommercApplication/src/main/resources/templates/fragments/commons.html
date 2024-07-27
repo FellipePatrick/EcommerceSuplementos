@@ -181,8 +181,8 @@
             </header>
             
             
-            
-            <div class="mensagem" th:fragment="msg">
+            <!-- fragmento de mensagem que não está funfando -->
+            <!-- <div class="mensagem" th:fragment="msg">
                 <div th:if="${msg != null}" class="alert alert-info alert-dismissible fade show" role="alert" style="position: fixed; top: 10px; right: 10px; z-index: 1000;">
                     <span th:text="${msg}"></span>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -191,8 +191,9 @@
                 </div>
             </div>
             
-            
-            <nav id="navigation" th:fragment="nav">
+             -->
+
+             <nav id="navigation" th:fragment="nav">
                 <!-- container -->
                 <div class="container">
                     <!-- responsive-nav -->
@@ -201,7 +202,8 @@
                         <ul class="main-nav nav navbar-nav">
                             <li><a th:href="@{/}">Home</a></li>
                             <li><a th:href="@{/carrinho}">Carrinho</a></li>
-                            <li><a th:href="@{/cadastroSuplementos}">Adicionar Produto</a></li>
+                            <li><a th:href="@{/cadastro}">Adicionar Produto</a></li>
+                            <li><a th:href="@{/admin}">Produtos</a></li>
                             <li><a th:href="@{/}">Sair</a></li>
                         </ul>
                         <!-- /NAV -->
@@ -210,7 +212,6 @@
                 </div>
                 <!-- /container -->
             </nav>
-            
             <div class="section" th:fragment="pint">
                 <!-- container -->
                 <div class="container">
@@ -293,53 +294,53 @@
                         <div class="row">
                             <div class="col-md-3 col-xs-6">
                                 <div class="footer">
-                                    <h3 class="footer-title">About Us</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut.</p>
+                                    <h3 class="footer-title">Sobre Nós</h3>
+                                    <p>Conheça a Pump Suplementos, sua loja de confiança para todos os tipos de suplementos esportivos e nutrição. Oferecemos produtos de alta qualidade para ajudar você a alcançar seus objetivos.</p>
                                     <ul class="footer-links">
-                                        <li><a href="#"><i class="fa fa-map-marker"></i>1734 Stonecoal Road</a></li>
-                                        <li><a href="#"><i class="fa fa-phone"></i>+021-95-51-84</a></li>
-                                        <li><a href="#"><i class="fa fa-envelope-o"></i>email@email.com</a></li>
+                                        <li><a href="#"><i class="fa fa-map-marker"></i>Av. Principal, 123</a></li>
+                                        <li><a href="#"><i class="fa fa-phone"></i>+55 11 98765-4321</a></li>
+                                        <li><a href="#"><i class="fa fa-envelope-o"></i>contato@pumpsuplementos.com.br</a></li>
                                     </ul>
                                 </div>
                             </div>
-    
+            
                             <div class="col-md-3 col-xs-6">
                                 <div class="footer">
-                                    <h3 class="footer-title">Categories</h3>
+                                    <h3 class="footer-title">Categorias</h3>
                                     <ul class="footer-links">
-                                        <li><a href="#">Hot deals</a></li>
-                                        <li><a href="#">Laptops</a></li>
-                                        <li><a href="#">Smartphones</a></li>
-                                        <li><a href="#">Cameras</a></li>
-                                        <li><a href="#">Accessories</a></li>
+                                        <li><a href="#">Proteínas</a></li>
+                                        <li><a href="#">Aminoácidos</a></li>
+                                        <li><a href="#">Pré-treinos</a></li>
+                                        <li><a href="#">Vitaminas e Minerais</a></li>
+                                        <li><a href="#">Creatina</a></li>
                                     </ul>
                                 </div>
                             </div>
-    
+            
                             <div class="clearfix visible-xs"></div>
-    
+            
                             <div class="col-md-3 col-xs-6">
                                 <div class="footer">
-                                    <h3 class="footer-title">Information</h3>
+                                    <h3 class="footer-title">Informações</h3>
                                     <ul class="footer-links">
-                                        <li><a href="#">About Us</a></li>
-                                        <li><a href="#">Contact Us</a></li>
-                                        <li><a href="#">Privacy Policy</a></li>
-                                        <li><a href="#">Orders and Returns</a></li>
-                                        <li><a href="#">Terms & Conditions</a></li>
+                                        <li><a href="#">Sobre Nós</a></li>
+                                        <li><a href="#">Contato</a></li>
+                                        <li><a href="#">Política de Privacidade</a></li>
+                                        <li><a href="#">Trocas e Devoluções</a></li>
+                                        <li><a href="#">Termos e Condições</a></li>
                                     </ul>
                                 </div>
                             </div>
-    
+            
                             <div class="col-md-3 col-xs-6">
                                 <div class="footer">
-                                    <h3 class="footer-title">Service</h3>
+                                    <h3 class="footer-title">Serviços</h3>
                                     <ul class="footer-links">
-                                        <li><a href="#">My Account</a></li>
-                                        <li><a href="#">View Cart</a></li>
-                                        <li><a href="#">Wishlist</a></li>
-                                        <li><a href="#">Track My Order</a></li>
-                                        <li><a href="#">Help</a></li>
+                                        <li><a href="#">Minha Conta</a></li>
+                                        <li><a href="#">Ver Carrinho</a></li>
+                                        <li><a href="#">Lista de Desejos</a></li>
+                                        <li><a href="#">Rastrear Pedido</a></li>
+                                        <li><a href="#">Ajuda</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -349,7 +350,7 @@
                     <!-- /container -->
                 </div>
                 <!-- /top footer -->
-    
+            
                 <!-- bottom footer -->
                 <div id="bottom-footer" class="section">
                     <div class="container">
@@ -365,24 +366,23 @@
                                     <li><a href="#"><i class="fa fa-cc-amex"></i></a></li>
                                 </ul>
                                 <span class="copyright">
-                                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                                    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by Fellipe e João Vitor
-                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                    Copyright &copy;<script>document.write(new Date().getFullYear());</script> Todos os direitos reservados | Este template é feito com <i class="fa fa-heart-o" aria-hidden="true"></i> por Fellipe e João Vitor
                                 </span>
                             </div>
                         </div>
-                            <!-- /row -->
+                        <!-- /row -->
                     </div>
                     <!-- /container -->
                 </div>
                 <!-- /bottom footer -->
+            
                 <script th:src="@{/js/jquery.min.js}"></script>
                 <script th:src="@{/js/bootstrap.min.js}"></script>
                 <script th:src="@{/js/slick.min.js}"></script>
                 <script th:src="@{/js/nouislider.min.js}"></script>
                 <script th:src="@{/js/jquery.zoom.min.js}"></script>
                 <script th:src="@{/js/main.js}"></script>
-                
-            </footer>            
+            </footer>
+                    
     </body>
 </html>

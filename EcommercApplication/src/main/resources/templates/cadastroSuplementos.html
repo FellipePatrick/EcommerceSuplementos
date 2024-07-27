@@ -12,23 +12,25 @@
 
         <div class="form-container">
             <h1>Cadastrar <br> Suplementos</h1>
-            <form th:object="${suplemento}" method="post" th:action="@{/docadastrarSuplemento}" enctype="multipart/form-data">
-                <input type="hidden" th:field="*{id}" />
+            <form th:object="${suplemento}" method="post" th:action="@{/salvar}" enctype="multipart/form-data">
+                <input type="hidden" th:field="*{id}" name="id"/>
                 
                 <label for="Nome">Nome</label>
-                <input type="text" th:field="*{nome}" id="Nome" placeholder="Digite o nome do suplemento" />
-
+                <input type="text" th:field="*{nome}" id="Nome" name="nome" placeholder="Digite o nome do suplemento" />
+                <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}" style="color: red"> </span> <br />
                 <label for="Imagem">Imagem</label>
                 <input type="file" name="file" id="Image" placeholder="Escolha uma imagem" />
                 
                 <label for="preco">Preço</label>
-                <input type="number" th:field="*{preco}" id="preco" placeholder="Digite o preço" />
-                
+                <input type="number" th:field="*{preco}" name="preco" id="preco" placeholder="Digite o preço" />
+                <span th:if="${#fields.hasErrors('preco')}" th:errors="*{preco}" style="color: red"> </span> <br />
                 <label for="descricao">Descrição</label>
-                <input type="text" id="descricao" th:field="*{descricao}" placeholder="Digite a descrição" />
+                <input name="descricao" type="text" id="descricao" th:field="*{descricao}" placeholder="Digite a descrição" />
+                <span th:if="${#fields.hasErrors('descricao')}" th:errors="*{descricao}" 
+                style="color: red"></span> <br />
                 
                 <label for="categoria">Categoria</label>
-                <select id="categoria" th:field="*{categoria}">
+                <select id="categoria" name="categoria" th:field="*{categoria}">
                     <option value="">Selecione uma categoria</option>
                     <option value="Proteínas">Proteina</option>
                     <option value="Vitaminas">Vitamina</option>

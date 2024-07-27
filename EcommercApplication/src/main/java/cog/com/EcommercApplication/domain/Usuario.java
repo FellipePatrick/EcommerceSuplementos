@@ -21,5 +21,13 @@ public class Usuario {
     private String nome;
     private String email;
     private String senha;
-    private String isAdmin;
+    private boolean isAdmin;
+
+    public void setisAdmin(String isAdmin) {//Nao funcionando
+        if(isAdmin == "USER"){
+            this.isAdmin = false;
+        }else{
+            this.isAdmin = true;
+        }
+    }
 }

@@ -22,6 +22,7 @@ import cog.com.EcommercApplication.service.SuplementosService;
 import org.springframework.web.servlet.ModelAndView;
 import cog.com.EcommercApplication.service.UsuarioService;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 
 @Controller
 public class EcommerceController {
@@ -35,8 +36,14 @@ public class EcommerceController {
         this.UsuarioService = usuarioService;
         this.fileStorageService = fileStorageService; 
     }
+
+    @GetMapping("/admin")//rota de teste
+    public String teste(Model model){
+        model.addAttribute("suplementos", suplementosService.listarSuplementos());  
+        return "homeUser";
+    }
    
-    
+
     @GetMapping({"/"})
     public String index(Model model, HttpSession session){
         @SuppressWarnings("unchecked")
@@ -58,30 +65,41 @@ public class EcommerceController {
         return "index";
     }
 
-    @GetMapping({"/editarSuplemento"})
-    public String doEditarSuplemento(){
-        return "editarSuplementos";
+    @GetMapping({"/editar/{id}"})
+    public ModelAndView editar(@PathVariable Long id){
+        Optional<Suplementos>  suplemento = suplementosService.buscarSuplemento(id);
+        if (suplemento.isPresent()){
+            ModelAndView mv = new ModelAndView("editarSuplementos");
+            mv.addObject("suplemento", suplemento.get());
+            return mv;
+        }else{
+            return new ModelAndView("redirect:/");
+        }
     }
-
+    
     @GetMapping("/deletar/{id}")
-    public String doDeletar(@PathVariable Long id){
+    public ModelAndView doDeletar(@PathVariable Long id){
         suplementosService.softDelete(id);
-        return "redirect:/";
+        ModelAndView modelAndView = new ModelAndView("index");
+        modelAndView.addObject("msg", "Produto deletado com sucesso");
+        modelAndView.addObject("suplementos", suplementosService.listarSuplementos());
+        return modelAndView;
     }
 
-    @GetMapping({"/cadastroSuplementos"})
+    @GetMapping({"/cadastro"})
     public String CadastroSuplemento(Model model){
         Suplementos suplemento = new Suplementos();
         model.addAttribute("suplemento", suplemento);
         return "cadastroSuplementos";
     }
 
-    @PostMapping("/docadastrarSuplemento")
+    @PostMapping("/salvar")
     public ModelAndView docadastrarSuplemento(@ModelAttribute Suplementos s, Errors errors, @RequestParam("file") MultipartFile file) {
         if (errors.hasErrors()) {
-            ModelAndView modelAndView = new ModelAndView("index");
+            return new ModelAndView("cadastroSuplementos");
+            /*ModelAndView modelAndView = new ModelAndView("index");
             modelAndView.addObject("msg", "Erro ao cadastrar suplementos");
-            return modelAndView;
+            return modelAndView;*/
         }
        String uniqueFileName = UUID.randomUUID().toString() + getFileExtension(file.getOriginalFilename());
         
@@ -89,10 +107,17 @@ public class EcommerceController {
       
         fileStorageService.save(file, uniqueFileName);
     
-         suplementosService.cadastrarSuplemento(s);
-    
         ModelAndView modelAndView = new ModelAndView("index");
-        modelAndView.addObject("msg", "Cadastro realizado com sucesso");
+        if(s.getId() != null && s.getId() > 0){
+            modelAndView.addObject("msg", "Cadastro atualizado com sucesso");
+            Optional<Suplementos> suplemento = suplementosService.buscarSuplemento(s.getId());
+            if (suplemento.isPresent()){
+                suplementosService.update(s);
+            }
+        }else{
+            modelAndView.addObject("msg", "Cadastro realizado com sucesso");
+            suplementosService.cadastrarSuplemento(s);
+        }
         modelAndView.addObject("suplementos", suplementosService.listarSuplementos());
         return modelAndView;
     }
@@ -105,6 +130,7 @@ public class EcommerceController {
         }
     }
     
+
     @GetMapping("/produto/{id}")
     public ModelAndView produto(@PathVariable Long id, Model model, HttpSession session){
          Optional<Suplementos> suplemento = suplementosService.buscarSuplemento(id);
@@ -131,7 +157,7 @@ public class EcommerceController {
          }
      }
 
-    @GetMapping({"/cadastro"})
+    @GetMapping({"/cadastroUser"})
     public String Cadastro(Model model){
         Usuario usuario = new Usuario();
         model.addAttribute("usuario", usuario);
@@ -151,7 +177,6 @@ public class EcommerceController {
 
     
     // Carrinho Controladores
-
     @GetMapping("/carrinho")
     public ModelAndView doCarrinho(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView();
@@ -196,7 +221,7 @@ public class EcommerceController {
         ModelAndView modelAndView = new ModelAndView();
 
         if (carrinho == null || carrinho.isEmpty()) {
-            modelAndView.setViewName("redirect:/");
+            modelAndView.setViewName("index");
             modelAndView.addObject("msg", "Seu carrinho está vazio.");
             return modelAndView;
         }

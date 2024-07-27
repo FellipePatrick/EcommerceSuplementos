@@ -171,12 +171,6 @@ public class EcommerceController {
         UsuarioService.cadastreUser(usuario);
         return "redirect:/";
     }
-
-    @GetMapping({"/login"})
-    public String doLogin(){
-        return "login";
-    }
-
     
     // Carrinho Controladores
     @GetMapping("/carrinho")

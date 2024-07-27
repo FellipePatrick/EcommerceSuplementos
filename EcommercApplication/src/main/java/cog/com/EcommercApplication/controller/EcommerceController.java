@@ -90,7 +90,7 @@ public class EcommerceController {
     public String CadastroSuplemento(Model model){
         Suplementos suplemento = new Suplementos();
         model.addAttribute("suplemento", suplemento);
-        return "cadastroSuplementos";
+        return "teste";
     }
 
     @PostMapping("/salvar")
@@ -160,7 +160,9 @@ public class EcommerceController {
     @GetMapping({"/cadastroUser"})
     public String Cadastro(Model model){
         Usuario usuario = new Usuario();
+        String roles = "ROLE_USER";
         model.addAttribute("usuario", usuario);
+        model.addAttribute("Roles", roles);
         return "cadastroUsuario";
     }
 

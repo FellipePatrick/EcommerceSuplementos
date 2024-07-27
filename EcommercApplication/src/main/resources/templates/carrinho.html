@@ -1,14 +1,14 @@
 <!DOCTYPE html>
         <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
-            <head th:replace="./fragments/commons :: head">
+            <head th:replace="~{fragments/commons :: head}">
     
             </head>
             <body>
-            <header th:replace="./fragments/commons :: headerLog"></header>
+            <header th:replace="~{fragments/commons :: headerLog}"></header>
 
-            <nav th:replace="./fragments/commons :: nav"/>
+            <nav th:replace="~{fragments/commons :: nav}"/>
             
-            <div th:replace="./fragments/commons :: pint"/>
+            <div th:replace="~{fragments/commons :: pint}"/>
 
             <div class="section">
                 <div class="container">
@@ -85,6 +85,6 @@
                 </div>
             </div>
             
-            <footer th:replace="./fragments/commons :: footer"></footer>  
+            <footer th:replace="~{fragments/commons :: footer}"></footer>  
         </body>
     </html>

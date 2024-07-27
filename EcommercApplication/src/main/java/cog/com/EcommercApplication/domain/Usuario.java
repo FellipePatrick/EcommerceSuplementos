@@ -23,11 +23,11 @@ public class Usuario {
     private String senha;
     private boolean isAdmin;
 
-    public void setisAdmin(String isAdmin) {//Nao funcionando
-        if(isAdmin == "USER"){
-            this.isAdmin = false;
-        }else{
-            this.isAdmin = true;
-        }
+    public boolean isIsAdmin() {
+        return isAdmin;
+    }
+
+    public void setIsAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
     }
 }

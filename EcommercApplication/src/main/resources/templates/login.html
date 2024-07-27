@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="./fragments/commons :: head">
+    <head th:replace="~{fragments/commons :: head}">
         <!-- Meta tags, CSS, etc. -->
     </head>
     <body>
-        <header th:replace="./fragments/commons :: header"></header>
+        <header th:replace="~{fragments/commons :: header}"></header>
 
         <div class="form-container" style="height: 400px;">
             <h1>Login</h1>
@@ -22,6 +22,6 @@
             </form>
         </div>
 
-        <footer th:replace="./fragments/commons :: footer"></footer>  
+        <footer th:replace="~{fragments/commons :: footer}"></footer>  
     </body>
 </html>

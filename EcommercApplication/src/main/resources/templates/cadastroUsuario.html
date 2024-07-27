@@ -1,35 +1,36 @@
 <!DOCTYPE html>
 <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="./fragments/commons :: head">
+    <head th:replace="~{fragments/commons :: head}">
         <!-- Meta tags, CSS, etc. -->
     </head>
     <body>
-        <header th:replace="./fragments/commons :: header"></header>
+        <header th:replace="~{fragments/commons :: headerLog}"></header>
 
         <div class="form-container">
             <h1>Cadastro</h1>
             <form th:object="${usuario}" method="post" th:action="@{/docadastro}">
                 <input type="hidden" th:field="*{id}" />            
+                
                 <label for="nome">Nome</label>
-                <input type="text"  id="nome" placeholder="Digite o nome" th:field="*{nome}"/>
+                <input type="text" id="nome" placeholder="Digite o nome" th:field="*{nome}"/>
                 
                 <label for="email">E-mail</label>
-                <input type="email"  id="email" placeholder="Digite o e-mail" th:field="*{email}"/>
+                <input type="email" id="email" placeholder="Digite o e-mail" th:field="*{email}"/>
                 
                 <label for="password">Senha</label>
                 <input type="password" id="password" placeholder="Digite a senha" th:field="*{senha}" />
                 
-                <label for="role">Função</label>
-                <select id="role" >
-                    <option value="">Selecione uma função</option>
-                    <option value="USER">Usuário</option>
-                    <option value="ADMIN">Administrador</option>    
-                </select>
+                <div class="form-group" style="   display: flex; align-items: center;">
+                    <label for="isAdmin" style=" margin-right: 10px; width: 100px;">Administrador</label>
+                    <input type="checkbox" style=" width: 20px; margin-top: -10px;"  id="isAdmin" th:field="*{isAdmin}" />
+                </div>
+                
                 <br>
                 <button type="submit">Cadastrar</button>
             </form>
         </div>
+        
 
-        <footer th:replace="./fragments/commons :: footer"></footer>  
+        <footer th:replace="~{fragments/commons :: footer}"></footer>  
     </body>
 </html>

@@ -33,6 +33,7 @@
                 
                 <!-- /MAIN HEADER -->
             </header>
+
             <header th:fragment="headerLog">
                 <!-- TOP HEADER -->
                 <div id="top-header">
@@ -44,30 +45,30 @@
                         </ul>
                         <ul class="header-links pull-right">
                             <li><a href="#"><i class="fa fa-user-o"></i> Fellipe</a></li>
-                            <li><a href="#"><i class="fa fa-trash"></i> Sair</a></li>
+                            <li><a href="#"><i class="fa fa-sign-out"></i> Sair</a></li>
                         </ul>
                     </div>
                 </div>
                 <!-- /TOP HEADER -->
-    
+            
                 <!-- MAIN HEADER -->
                 <div id="header">
-                    <!-- container -->
                     <div class="container">
-                        <!-- row -->
                         <div class="row">
                             <!-- LOGO -->
                             <div class="col-md-3">
-                                <
+                                <!-- Logo content -->
                             </div>
                             <!-- /LOGO -->
-    
+            
                             <!-- SEARCH BAR -->
-                            <div class="col-md-6"> </div>
+                            <div class="col-md-6">
+                                <!-- Search bar content -->
+                            </div>
                             <!-- /SEARCH BAR -->
-    
+            
                             <!-- ACCOUNT -->
-                            <div class=" col-md-3 clearfix">
+                            <div class="col-md-3 clearfix">
                                 <div class="header-ctn">
                                     <!-- Wishlist -->
                                     <div>
@@ -78,68 +79,119 @@
                                         </a>
                                     </div>
                                     <!-- /Wishlist -->
-    
+            
                                     <!-- Cart -->
                                     <div class="dropdown">
                                         <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                                             <i class="fa fa-shopping-cart"></i>
                                             <span>Carrinho</span>
-                                            <div class="qty">3</div>
+                                            <div class="qty" th:text="${totalItens != null ? totalItens : 0}"></div>
                                         </a>
                                         <div class="cart-dropdown">
                                             <div class="cart-list">
-                                                <div class="product-widget">
-                                                    <div class="product-img">
-                                                        <!-- <img src="./img/product01.png" alt=""> -->
+                                                <div th:if="${carrinho != null and !carrinho.isEmpty()}">
+                                                    <div th:each="item : ${carrinho.values()}" class="product-widget">
+                                                        <div class="product-img">
+                                                            <img th:src="@{'/images/' + ${item.suplemento.imageUri}}" alt="" width="20">
+                                                        </div>
+                                                        <div class="product-body">
+                                                            <h3 class="product-name">
+                                                                <a th:href="@{'/produto/'+${item.suplemento.id}}" th:text="${item.suplemento.nome}"></a>
+                                                            </h3>
+                                                            <h4 class="product-price">
+                                                                <span class="qty" th:text="'$' + ${item.suplemento.preco}"></span><br>
+                                                            </h4>
+                                                            <span class="qty" th:text="'QTD: ' + ${item.quantidade}" style="font-size: 10px; margin-top: -10px;"></span>
+                                                            
+                                                        </div>
+                                                        <form th:action="@{'/removerDoCarrinho/' + ${item.suplemento.id}}" method="post" style="position: absolute; top: -5px; right: auto;">
+                                                            <button type="submit" class="fa fa-close" style="background-color: transparent; border: none;"></button>
+                                                        </form>
                                                     </div>
-                                                    <div class="product-body">
-                                                        <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                                                        <h4 class="product-price"><span class="qty">1x</span>$980.00</h4>
-                                                    </div>
-                                                    <button class="delete"><i class="fa fa-close"></i></button>
                                                 </div>
-    
-                                                <div class="product-widget">
-                                                    <div class="product-img">
-                                                        <!-- <img src="./img/product02.png" alt=""> -->
-                                                    </div>
-                                                    <div class="product-body">
-                                                        <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                                                        <h4 class="product-price"><span class="qty">3x</span>$980.00</h4>
-                                                    </div>
-                                                    <button class="delete"><i class="fa fa-close"></i></button>
+                                                <div th:if="${carrinho == null or carrinho.isEmpty()}">
+                                                    <p>Seu carrinho está vazio.</p>
                                                 </div>
                                             </div>
                                             <div class="cart-summary">
-                                                <small>3 Item(s) selected</small>
-                                                <h5>SUBTOTAL: $2940.00</h5>
+                                                <small th:text="${totalItens != null ? totalItens + ' Item(s) selecionado(s)' : '0 Item(s) selecionado(s)'}"></small>
+                                                <h5 th:text="${subtotal != null ? 'SUBTOTAL: $' + subtotal : 'SUBTOTAL: $0.00'}"></h5>
                                             </div>
-                                            <div class="cart-btns">
-                                                <a href="#">View Cart</a>
-                                                <a href="#">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
+                                            <div class="cart-btns" style="display: flex; align-items: center; gap: 10px; white-space: nowrap;">
+                                                <a 
+                                                    th:href="@{/carrinho}" 
+                                                    th:if="${carrinho != null and !carrinho.isEmpty()}" 
+                                                    style="
+                                                    
+                                                        font-size: 14px; 
+                                                        display: inline-block; 
+                                                        width: 150px; 
+                                                        text-align: center; "
+                                                >
+                                                    Ver carrinho
+                                                </a>
+                                                <form 
+                                                    th:action="@{/finalizarCompra}" 
+                                                    method="post" 
+                                                    th:if="${carrinho != null and !carrinho.isEmpty()}" 
+                                                    style="display: inline-block; margin: 0;"
+                                                >
+                                                    <button 
+                                                        type="submit" 
+                                                        style="
+                                                            font-weight: 700;
+                                                            background-color: #D10024; 
+                                                            border: none; 
+                                                            color: white; 
+                                                            width: 150px; 
+                                                            padding: 12px; 
+                                                            text-align: center; 
+                                                            margin-top: 10px;
+                                                            cursor: pointer; 
+                                                            display: flex; 
+                                                            align-items: center; 
+                                                            justify-content: center; 
+                                                            margin-top: 15px;
+                                                            box-shadow: 0 2px 4px rgba(0,0,0,0.1);"
+                                                    >
+                                                        <span>Finalizar <i class="fa fa-arrow-circle-right"></i></span>
+                                                    </button>
+                                                </form>
                                             </div>
+                                            
                                         </div>
                                     </div>
                                     <!-- /Cart -->
-    
-                                    <!-- Menu Toogle -->
+            
+                                    <!-- Menu Toggle -->
                                     <div class="menu-toggle">
                                         <a href="#">
                                             <i class="fa fa-bars"></i>
                                             <span>Menu</span>
                                         </a>
                                     </div>
-                                    <!-- /Menu Toogle -->
+                                    <!-- /Menu Toggle -->
                                 </div>
                             </div>
                             <!-- /ACCOUNT -->
                         </div>
-                        <!-- row -->
                     </div>
-                    <!-- container -->
                 </div>
                 <!-- /MAIN HEADER -->
             </header>
+            
+            
+            
+            <div class="mensagem" th:fragment="msg">
+                <div th:if="${msg != null}" class="alert alert-info alert-dismissible fade show" role="alert" style="position: fixed; top: 10px; right: 10px; z-index: 1000;">
+                    <span th:text="${msg}"></span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+            
+            
             <nav id="navigation" th:fragment="nav">
                 <!-- container -->
                 <div class="container">
@@ -158,6 +210,7 @@
                 </div>
                 <!-- /container -->
             </nav>
+            
             <div class="section" th:fragment="pint">
                 <!-- container -->
                 <div class="container">
@@ -190,15 +243,16 @@
                 </div>
                 <!-- /container -->
             </div>
+
             <div class="div" th:fragment="cards">
                 <div class="col-md-12">
                     <div class="row">
                         <div class="products-tabs">
                             <!-- tab -->
                             <div id="tab1" class="tab-pane active">
-                                <div class="products-slick slick-initialized slick-slider"  th:each="suplemento : ${suplementos}"  data-nav="#slick-nav-1">
+                                <div class="products-slick slick-initialized slick-slider" data-nav="#slick-nav-1">
                                     <!-- product -->
-                                    <div class="product slick-slide slick-active" data-slick-index="3" aria-hidden="false" tabindex="0" style="width: 213px;">
+                                    <div  th:each="suplemento : ${suplementos}"  class="product slick-slide slick-active" data-slick-index="3" aria-hidden="false" tabindex="0" style="width: 213px;">
                                         <div class="product-img">
                                             <img th:src="@{'/images/' + ${suplemento.imageUri}}" alt="">
                                         </div>
@@ -215,7 +269,10 @@
                                             </div>
                                         </div>
                                         <div class="add-to-cart">
-                                            <button class="add-to-cart-btn" tabindex="0"><i class="fa fa-shopping-cart"></i> adicionar</button>
+                                            <form id="adicionar" th:action="@{'/adicionarAoCarrinho/' +${suplemento.id}}" method="post">
+                                                <input type="hidden" name="id" id="id" value="${suplemento.id}">
+                                                <button type="submit" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> adicionar</button>
+                                            </form>
                                         </div>
                                     </div>
                                     <div id="slick-nav-1" class="products-slick-nav"><button class="slick-prev slick-arrow" aria-label="Previous" type="button" style="display: inline-block;">Previous</button><button class="slick-next slick-arrow" aria-label="Next" type="button" style="display: inline-block;">Next</button></div>
@@ -309,7 +366,7 @@
                                 </ul>
                                 <span class="copyright">
                                     <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                                    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                                    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by Fellipe e João Vitor
                                 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                                 </span>
                             </div>

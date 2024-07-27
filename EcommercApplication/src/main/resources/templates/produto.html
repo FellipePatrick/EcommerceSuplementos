@@ -46,11 +46,13 @@
 								<span class="product-available">Em estoque</span>
 							</div>
 							<p style="margin-top:30px;" th:text="*{descricao}"> </p>
-
+							
 							<div class="add-to-cart" style="margin-top: 70px;">
-								<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Adicionar ao Carrinho</button>
+								<form id="adicionar" th:action="@{'/adicionarAoCarrinho/' +${suplemento.id}}" method="post">
+									<input type="hidden" name="id" id="id" value="${suplemento.id}">
+									<button type="submit" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> adicionar</button>
+								</form>
 							</div>
-
 						</div>
 					</div>
 					<!-- /Product details -->

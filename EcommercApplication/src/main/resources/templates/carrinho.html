@@ -8,77 +8,85 @@
 
             <nav th:replace="./fragments/commons :: nav"/>
 
+            
             <div th:replace="./fragments/commons :: pint"/>
 
-            <!-- MY LITTLE CAR -->
             <div class="section">
-                <!-- container -->
                 <div class="container">
-                    <!-- row -->
                     <div class="row">
-    
-                        <!-- section title -->
                         <div class="col-md-12">
                             <div class="section-title">
                                 <h3 class="title">Meu Carrinho</h3>
                                 <div class="section-nav">
                                     <ul class="section-tab-nav tab-nav">
-                                        <li class="active"><a data-toggle="tab" href="#tab1">Laptops</a></li>
-                                        <li><a data-toggle="tab" href="#tab1">Smartphones</a></li>
-                                        <li><a data-toggle="tab" href="#tab1">Cameras</a></li>
-                                        <li><a data-toggle="tab" href="#tab1">Accessories</a></li>
+                                        <li class="active"><a data-toggle="tab" href="#tab1">Proteínas</a></li>
+                                        <li><a data-toggle="tab" href="#tab2">Vitaminas</a></li>
+                                        <li><a data-toggle="tab" href="#tab3">Minerais</a></li>
+                                        <li><a data-toggle="tab" href="#tab4">Pré-Treinos</a></li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
-                        <!-- /section title -->
-    
-                        <!-- Products tab & slick -->
+                        
                         <div class="col-md-12">
                             <div class="row">
                                 <div class="products-tabs">
-                                    <!-- tab -->
+                                    <!-- Produtos Tab -->
                                     <div id="tab1" class="tab-pane active">
                                         <div class="products-slick slick-initialized slick-slider" data-nav="#slick-nav-1">
-                                            <!-- product -->
-                                            <div class="product slick-slide slick-active" data-slick-index="3" aria-hidden="false" tabindex="0" style="width: 213px;">
-                                                <div class="product-img">
-                                                    <img src="./img/product04.png" alt="">
-                                                </div>
-                                                <div class="product-body">
-                                                    <p class="product-category">Category</p>
-                                                    <h3 class="product-name"><a href="#" tabindex="0">product name goes here</a></h3>
-                                                    <h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-                                                    <div class="product-rating">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
+                                            <!-- Verificar se o carrinho não está vazio -->
+                                            <div th:if="${carrinho != null and !carrinho.isEmpty()}">
+                                                <div th:each="item : ${carrinho.values()}" class="product slick-slide slick-active" style="width: 213px;">
+                                                    <div class="product-img">
+                                                        <img th:src="@{'/images/' + ${item.suplemento.imageUri}}" alt="" width="100">
                                                     </div>
-                                                    <div class="product-btns">
-                                                        <button class="add-to-wishlist" tabindex="0"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-                                                        <button class="add-to-compare" tabindex="0"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-                                                        <button class="quick-view" tabindex="0"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                                                    <div class="product-body">
+                                                        <p class="product-category" th:text="${item.suplemento.categoria}"></p>
+                                                        <h3 class="product-name"><a th:href="@{'/produto/'+${item.suplemento.id}}" th:text="${item.suplemento.nome}"></a></h3>
+                                                        <h4 class="product-price" th:text="${item.suplemento.preco}"></h4>
+                                                        <p class="product-category" th:text="'Qtd: ' + ${item.quantidade}"></p>
+                                                        <div class="product-rating">
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="add-to-cart">
-                                                    <button class="add-to-cart-btn" tabindex="0"><i class="fa fa-shopping-cart"></i> remover</button>
+                                                    <div class="add-to-cart">
+                                                        <form th:action="@{'/removerDoCarrinho/' + ${item.suplemento.id}}" method="post">
+                                                            <button type="submit" class="add-to-cart-btn"><i class="fa fa-trash"></i> Remover</button>
+                                                        </form>
+                                                    </div>
                                                 </div>
                                             </div>
+                                            <div th:if="${carrinho == null or carrinho.isEmpty()}">
+                                                <p>Seu carrinho está vazio.</p>
+                                            </div>
                                         </div>
-                                        <div id="slick-nav-1" class="products-slick-nav"><button class="slick-prev slick-arrow" aria-label="Previous" type="button" style="display: inline-block;">Previous</button><button class="slick-next slick-arrow" aria-label="Next" type="button" style="display: inline-block;">Next</button></div>
                                     </div>
-                                    <!-- /tab -->
+                                    <!-- Outras Abas -->
+                                    <!-- ... -->
                                 </div>
                             </div>
                         </div>
-                        <!-- Products tab & slick -->
+                        
                     </div>
-                    <!-- /row -->
+                    <div class="cart-summary-container" style="margin-top: 70px;">
+                        <div class="cart-summary">
+                            <small th:text="${totalItens != null ? totalItens + ' Item(s) selecionado(s)' : '0 Item(s) selecionado(s)'}"></small>
+                            <h5 th:text="${subtotal != null ? 'SUBTOTAL: $' + subtotal : 'SUBTOTAL: $0.00'}"></h5>
+                        </div>
+                        <div class="add-to-cart" th:if="${carrinho != null and !carrinho.isEmpty()}">
+                            <form th:action="@{/finalizarCompra}" method="post">
+                                <button type="submit" class="add-to-cart-btn" style="background-color: rgba(0, 255, 255, 0); border-color: rgba(250, 235, 215, 0); width: 150px; margin-left: -10px;">Finalizar Compra <i class="fa fa-arrow-circle-right"></i></button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-                <!-- /container -->
             </div>
+            
+            
             
    
             <footer th:replace="./fragments/commons :: footer"></footer>  

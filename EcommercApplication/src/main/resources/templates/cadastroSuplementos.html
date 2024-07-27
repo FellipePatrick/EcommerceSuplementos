@@ -6,6 +6,10 @@
     <body>
         <header th:replace="fragments/commons :: headerLog"></header>
 
+        <!-- Navbar-->
+        <nav th:replace="~{fragments/commons :: nav}"/>
+        
+
         <div class="form-container">
             <h1>Cadastrar <br> Suplementos</h1>
             <form th:object="${suplemento}" method="post" th:action="@{/docadastrarSuplemento}" enctype="multipart/form-data">

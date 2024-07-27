@@ -1,4 +1,6 @@
 package cog.com.EcommercApplication.controller;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -12,12 +14,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import cog.com.EcommercApplication.domain.CarrinhoItem;
 import cog.com.EcommercApplication.domain.Suplementos;
 import cog.com.EcommercApplication.domain.Usuario;
 import cog.com.EcommercApplication.service.FileStorageService;
 import cog.com.EcommercApplication.service.SuplementosService;
 import org.springframework.web.servlet.ModelAndView;
 import cog.com.EcommercApplication.service.UsuarioService;
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class EcommerceController {
 
@@ -30,15 +35,25 @@ public class EcommerceController {
         this.UsuarioService = usuarioService;
         this.fileStorageService = fileStorageService; 
     }
-
-    @GetMapping("/index")//rota de teste
-    public String teste(Model model){
-        model.addAttribute("suplementos", suplementosService.listarSuplementos());  
-        return "homeUser";
-    }
-
+   
+    
     @GetMapping({"/"})
-    public String index(Model model){
+    public String index(Model model, HttpSession session){
+        @SuppressWarnings("unchecked")
+        Map<Long, CarrinhoItem> carrinho = (Map<Long, CarrinhoItem>) session.getAttribute("carrinho");
+
+        if(carrinho != null){
+            double subtotal = carrinho.values().stream()
+                        .mapToDouble(item -> item.getSuplemento().getPreco() * item.getQuantidade())
+                        .sum();  
+                        int totalItens = carrinho.values().stream()
+                            .mapToInt(CarrinhoItem::getQuantidade)
+                            .sum();
+            model.addAttribute("carrinho", carrinho);
+            model.addAttribute("totalItens", totalItens);
+            model.addAttribute("subtotal", subtotal);
+        }
+
         model.addAttribute("suplementos", suplementosService.listarSuplementos());
         return "index";
     }
@@ -61,12 +76,13 @@ public class EcommerceController {
         return "cadastroSuplementos";
     }
 
-        @PostMapping("/docadastrarSuplemento")
+    @PostMapping("/docadastrarSuplemento")
     public ModelAndView docadastrarSuplemento(@ModelAttribute Suplementos s, Errors errors, @RequestParam("file") MultipartFile file) {
         if (errors.hasErrors()) {
-            return new ModelAndView("cadastroPage");
+            ModelAndView modelAndView = new ModelAndView("index");
+            modelAndView.addObject("msg", "Erro ao cadastrar suplementos");
+            return modelAndView;
         }
-    
        String uniqueFileName = UUID.randomUUID().toString() + getFileExtension(file.getOriginalFilename());
         
         s.setImageUri(uniqueFileName);
@@ -89,16 +105,23 @@ public class EcommerceController {
         }
     }
     
-    
-    @GetMapping("“/adicionarCarrinho/{id}")
-    public String doAdicionarCarrinho(@PathVariable Long id){
-        return "redirect:/";
-    }
-    
     @GetMapping("/produto/{id}")
-    public ModelAndView produto(@PathVariable Long id, Model model){
+    public ModelAndView produto(@PathVariable Long id, Model model, HttpSession session){
          Optional<Suplementos> suplemento = suplementosService.buscarSuplemento(id);
          if (suplemento.isPresent()){
+             @SuppressWarnings("unchecked")
+            Map<Long, CarrinhoItem> carrinho = (Map<Long, CarrinhoItem>) session.getAttribute("carrinho");
+            if(carrinho != null){
+                double subtotal = carrinho.values().stream()
+                            .mapToDouble(item -> item.getSuplemento().getPreco() * item.getQuantidade())
+                            .sum();  
+                int totalItens = carrinho.values().stream()
+                                .mapToInt(CarrinhoItem::getQuantidade)
+                                .sum();
+                model.addAttribute("carrinho", carrinho);
+                model.addAttribute("totalItens", totalItens);
+                model.addAttribute("subtotal", subtotal);
+            }
              model.addAttribute("suplementos", suplementosService.listarSuplementos());
              ModelAndView mv = new ModelAndView("produto");
              mv.addObject("suplemento", suplemento.get());
@@ -126,8 +149,106 @@ public class EcommerceController {
         return "login";
     }
 
-    @GetMapping({"/carrinho"})
-    public String doCarrinho(){
-        return "carrinho";
+    
+    // Carrinho Controladores
+
+    @GetMapping("/carrinho")
+    public ModelAndView doCarrinho(HttpSession session) {
+        ModelAndView modelAndView = new ModelAndView();
+    
+        @SuppressWarnings("unchecked")
+        Map<Long, CarrinhoItem> carrinho = (Map<Long, CarrinhoItem>) session.getAttribute("carrinho");
+    
+        if (carrinho == null || carrinho.isEmpty()) {
+            modelAndView.addObject("msg", "Seu carrinho está vazio.");
+            modelAndView.setViewName("redirect:/");
+            return modelAndView;
+        }
+    
+        double subtotal = carrinho.values().stream()
+                                  .mapToDouble(item -> item.getSuplemento().getPreco() * item.getQuantidade())
+                                  .sum();
+    
+        int totalItens = carrinho.values().stream()
+                                 .mapToInt(CarrinhoItem::getQuantidade)
+                                 .sum();
+    
+        modelAndView.addObject("carrinho", carrinho);
+        modelAndView.addObject("subtotal", subtotal);
+        modelAndView.addObject("totalItens", totalItens);
+        modelAndView.setViewName("carrinho");
+        return modelAndView;
     }
+    
+    
+    @GetMapping("/finalizarCompra")
+    public String finalizarCompraGet(HttpSession session) {
+        session.invalidate();
+        return "redirect:/"; 
+    }
+
+
+    @PostMapping("/finalizarCompra")
+    public ModelAndView finalizarCompra(HttpSession session) {
+        @SuppressWarnings("unchecked")
+        Map<Long, CarrinhoItem> carrinho = (Map<Long, CarrinhoItem>) session.getAttribute("carrinho");
+        
+        ModelAndView modelAndView = new ModelAndView();
+
+        if (carrinho == null || carrinho.isEmpty()) {
+            modelAndView.setViewName("redirect:/");
+            modelAndView.addObject("msg", "Seu carrinho está vazio.");
+            return modelAndView;
+        }
+
+        session.removeAttribute("carrinho");
+        modelAndView.addObject("msg", "Compra finalizada com sucesso!");
+        modelAndView.setViewName("redirect:/");
+        return modelAndView;
+    }
+
+
+    @PostMapping("/adicionarAoCarrinho/{id}")
+    public ModelAndView adicionarAoCarrinho(@PathVariable Long id, HttpSession session) {
+        Optional<Suplementos> suplementoOptional = suplementosService.buscarSuplemento(id);
+        
+        if (!suplementoOptional.isPresent()) {
+            return new ModelAndView("redirect:/error").addObject("message", "Item não encontrado");
+        }
+
+        Suplementos suplemento = suplementoOptional.get();
+
+        @SuppressWarnings("unchecked")
+        Map<Long, CarrinhoItem> carrinho = (Map<Long, CarrinhoItem>) session.getAttribute("carrinho");
+        if (carrinho == null) {
+            carrinho = new HashMap<>();
+            session.setAttribute("carrinho", carrinho);
+        }
+        CarrinhoItem item = carrinho.get(suplemento.getId());
+        if (item != null) {
+            item.setQuantidade(item.getQuantidade() + 1);
+        } else {
+            item = new CarrinhoItem(suplemento, 1);
+            carrinho.put(suplemento.getId(), item);
+        }
+        session.setAttribute("carrinho", carrinho);
+        ModelAndView modelAndView = new ModelAndView("redirect:/");
+        modelAndView.addObject("msg", "Atualize a página para que seja exibido a quantidade de itens no carrinho");
+        return modelAndView;
+    }
+
+    @PostMapping("/removerDoCarrinho/{id}")
+    public ModelAndView removerDoCarrinho(@PathVariable Long id, HttpSession session) {
+        @SuppressWarnings("unchecked")
+        Map<Long, CarrinhoItem> carrinho = (Map<Long, CarrinhoItem>) session.getAttribute("carrinho");
+        if (carrinho != null) {
+            carrinho.remove(id);
+            session.setAttribute("carrinho", carrinho);
+        }
+        ModelAndView modelAndView = new ModelAndView("redirect:/carrinho");
+        modelAndView.addObject("msg", "Item removido do carrinho com sucesso");
+        return modelAndView;
+    }
+
+
 }

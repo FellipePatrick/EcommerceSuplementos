@@ -11,16 +11,14 @@
         
 
         <div class="form-container">
-            <h1>Cadastrar <br> Suplementos</h1>
-            <form th:object="${suplemento}" method="post" th:action="@{/salvar}" enctype="multipart/form-data">
+            <h1>Cadastro de Suplementos</h1>
+            <form th:object="${suplementos}" enctype="multipart/form-data" method="post" th:action="@{/salvar}"      >
                 <input type="hidden" th:field="*{id}" name="id"/>
-                
                 <label for="Nome">Nome</label>
                 <input type="text" th:field="*{nome}" id="Nome" name="nome" placeholder="Digite o nome do suplemento" />
                 <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}" style="color: red"> </span> <br />
                 <label for="Imagem">Imagem</label>
                 <input type="file" name="file" id="Image" placeholder="Escolha uma imagem" />
-                
                 <label for="preco">Preço</label>
                 <input type="number" th:field="*{preco}" name="preco" id="preco" placeholder="Digite o preço" />
                 <span th:if="${#fields.hasErrors('preco')}" th:errors="*{preco}" style="color: red"> </span> <br />
@@ -37,8 +35,9 @@
                     <option value="Minerais">Mineral</option>
                     <option value="Pré-Treinos">Pre-Treino</option>
                 </select>
-                
-                <br>
+                <span th:if="${#fields.hasErrors('categoria')}" th:errors="*{descricao}" 
+                style="color: red"></span> <br />
+                <br />
                 <button type="submit">Cadastrar</button>
             </form>
         </div>

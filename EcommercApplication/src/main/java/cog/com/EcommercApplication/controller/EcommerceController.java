@@ -86,15 +86,15 @@ public class EcommerceController {
         return modelAndView;
     }
 
-    @GetMapping({"/cadastro"})
-    public String CadastroSuplemento(Model model){
-        Suplementos suplemento = new Suplementos();
-        model.addAttribute("suplemento", suplemento);
-        return "teste";
+    @GetMapping("/cadastro")
+    public String getCadastroPage(Model model){
+        Suplementos s = new Suplementos();
+        model.addAttribute("suplementos", s);
+        return "cadastroSuplementos";
     }
 
     @PostMapping("/salvar")
-    public ModelAndView docadastrarSuplemento(@ModelAttribute Suplementos s, Errors errors, @RequestParam("file") MultipartFile file) {
+    public ModelAndView processCadastroPage(@ModelAttribute @Valid Suplementos s, Errors errors, @RequestParam("file") MultipartFile file){
         if (errors.hasErrors()) {
             return new ModelAndView("cadastroSuplementos");
             /*ModelAndView modelAndView = new ModelAndView("index");
@@ -188,7 +188,8 @@ public class EcommerceController {
     
         if (carrinho == null || carrinho.isEmpty()) {
             modelAndView.addObject("msg", "Seu carrinho está vazio.");
-            modelAndView.setViewName("redirect:/");
+            modelAndView.setViewName("index");
+            modelAndView.addObject("suplementos", suplementosService.listarSuplementos());
             return modelAndView;
         }
     
@@ -223,14 +224,16 @@ public class EcommerceController {
         ModelAndView modelAndView = new ModelAndView();
 
         if (carrinho == null || carrinho.isEmpty()) {
-            modelAndView.setViewName("index");
             modelAndView.addObject("msg", "Seu carrinho está vazio.");
+            modelAndView.addObject("suplementos", suplementosService.listarSuplementos());
+            modelAndView.setViewName("index");
             return modelAndView;
         }
 
         session.removeAttribute("carrinho");
         modelAndView.addObject("msg", "Compra finalizada com sucesso!");
-        modelAndView.setViewName("redirect:/");
+        modelAndView.addObject("suplementos", suplementosService.listarSuplementos());
+        modelAndView.setViewName("index");
         return modelAndView;
     }
 

@@ -23,7 +23,6 @@ public class Suplementos{
     private Long id;
     @Size(min = 3, max = 100, message = "O nome deve ter entre 3 e 100 caracteres")
     private String nome;
-    @NotBlank(message = "O campo imagem é obrigatório")
     private String imageUri;
     @NotNull(message = "O preço não pode ser nulo.")
     @DecimalMin(value = "0.1", inclusive = true, message = "O preço deve ser pelo menos 0.1.")

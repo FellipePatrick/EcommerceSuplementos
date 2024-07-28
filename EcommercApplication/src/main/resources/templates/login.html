@@ -5,7 +5,9 @@
     </head>
     <body>
         <header th:replace="~{fragments/commons :: headerLog}"></header>
-
+        <br>
+        <br>
+        <h3 th:text="*{msg}" style="text-align: center; color: green;"></h3>
         <div class="form-container" style="height: 450px;">
             <h1>Login</h1>
             <form  method="post" th:action="@{/login}">           

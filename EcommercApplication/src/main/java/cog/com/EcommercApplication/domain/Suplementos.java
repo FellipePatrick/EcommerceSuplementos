@@ -31,5 +31,5 @@ public class Suplementos{
     private String descricao;
     @Size(min = 3, max = 100, message = "A categoria deve ter entre 3 e 100 caracteres")
     private String categoria;
-    private LocalDate  isDeleted;
+    private Long isDeleted;
 }

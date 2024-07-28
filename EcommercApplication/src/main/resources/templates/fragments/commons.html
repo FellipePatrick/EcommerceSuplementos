@@ -18,37 +18,53 @@
     </head>
     
     <body>
-            <header th:fragment="x">
-                <!-- TOP HEADER -->
-                <div id="top-header">
-                    <div class="container">
-                        <ul class="header-links pull-right">
-                            <li><a href="#"><i class="fa fa-user-o"></i> My Account</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- /TOP HEADER -->
-
-                <!-- MAIN HEADER -->
-                
-                <!-- /MAIN HEADER -->
-            </header>
-
+           
             <header th:fragment="headerLog">
                 <!-- TOP HEADER -->
                 <div id="top-header">
                     <div class="container">
-                        <ul class="header-links pull-left">
-                            <li><a href="#"><i class="fa fa-phone"></i> +021-95-51-84</a></li>
-                            <li><a href="#"><i class="fa fa-envelope-o"></i> email@email.com</a></li>
-                            <li><a href="#"><i class="fa fa-map-marker"></i> 1734 Stonecoal Road</a></li>
-                        </ul>
-                        <ul class="header-links pull-right">
-                            <li><a href="#"><i class="fa fa-user-o"></i> Fellipe</a></li>
-                            <li><a href="#"><i class="fa fa-sign-out"></i> Sair</a></li>
+                        <ul class="header-links pull-right" style="display: flex; justify-content: center;">
+                            <div id="top-header">
+                                <div class="container">
+                                    <ul class="header-links pull-right" style="display: flex; justify-content: center;">
+                                        <li th:if="${username} == 'Guest'">
+                                            <a th:href="@{/login}">
+                                                <i class="fa fa-user-o"></i>
+
+                                                <span >Login</span>
+                                            </a>
+                                        </li>
+                                        <li th:if="${username} != 'Guest'" style="margin-top: 1%;">
+                                            <a th:href="@{/}">
+                                                <i class="fa fa-user-o"></i>
+                                                <span th:text="${username}"></span>
+                                            </a>
+                                        </li>
+                        
+                                        <form th:if="${username} != 'Guest'" th:action="@{/logout}" method="post">
+                                            <button type="submit" style="background-color: transparent; border: none;">
+                                                <li>
+                                                    <a style="color: #ffffff;">
+                                                        <i class="fa fa-sign-out" style="color: #D10024;"></i> Sair
+                                                    </a>
+                                                </li>
+                                            </button>
+                                        </form>
+                        
+                                        <li th:if="${username} == 'Guest'">
+                                            <a th:href="@{/cadastroUser}">
+                                                <i class="fa fa-user-plus"></i> Cadastrar-se
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>               
                         </ul>
                     </div>
                 </div>
+                
+                
+                
                 <!-- /TOP HEADER -->
             
                 <!-- MAIN HEADER -->
@@ -179,21 +195,9 @@
                 </div>
                 <!-- /MAIN HEADER -->
             </header>
-            
-            
-            <!-- fragmento de mensagem que não está funfando -->
-            <!-- <div class="mensagem" th:fragment="msg">
-                <div th:if="${msg != null}" class="alert alert-info alert-dismissible fade show" role="alert" style="position: fixed; top: 10px; right: 10px; z-index: 1000;">
-                    <span th:text="${msg}"></span>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            </div>
-            
-             -->
 
-             <nav id="navigation" th:fragment="nav">
+
+             <nav  th:if="${role} != 'Guest'" id="navigation" th:fragment="nav">
                 <!-- container -->
                 <div class="container">
                     <!-- responsive-nav -->
@@ -201,10 +205,13 @@
                         <!-- NAV -->
                         <ul class="main-nav nav navbar-nav">
                             <li><a th:href="@{/}">Home</a></li>
-                            <li><a th:href="@{/carrinho}">Carrinho</a></li>
-                            <li><a th:href="@{/cadastro}">Adicionar Produto</a></li>
-                            <li><a th:href="@{/admin}">Produtos</a></li>
-                            <li><a th:href="@{/}">Sair</a></li>
+                            <li th:if="${role} == 'USER'"><a th:href="@{/carrinho}">Carrinho</a></li>
+                            <li th:if="${role} == 'ADMIN'">
+                                <a th:href="@{/cadastro}">Adicionar Produto</a>
+                            </li>
+                            <li th:if="${role} == 'ADMIN'">
+                                <a th:href="@{/admin}">Produtos</a>
+                            </li>
                         </ul>
                         <!-- /NAV -->
                     </div>
